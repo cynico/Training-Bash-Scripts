@@ -1,0 +1,34 @@
+#!/bin/bash
+
+validAlphaNum() {
+	
+	
+	# This function returns 0 in case the parameter passed to it 
+	## is a valid alphanumeric string.
+	### returns 1 otherwise.
+	
+	# validchars="$(echo $1 | sed -e 's/([[:digit:]]+)-//g')"
+	/usr/bin/touch .temp.txt
+	echo "$1" > .temp.txt
+
+	valid=$(/usr/bin/egrep '([[:digit:]]+)-([[:digit:]]+)' ".temp.txt")
+	if [ ! -z $valid ]; then
+		return 0
+	else
+		echo $valid
+		return 1
+	fi
+	rm ".temp.txt"
+}
+
+/bin/echo -n "Enter input: "
+read input
+
+if ! validAlphaNum "$input"; then
+	echo "Please enter only letters and numbers." >&2
+	exit 1
+else
+	echo "Input is valid."
+fi
+
+exit 0
